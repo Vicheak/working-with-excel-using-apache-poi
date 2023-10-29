@@ -1,0 +1,127 @@
+databaseChangeLog:
+- changeSet:
+    id: 1698498009104-1
+    author: Suon Vicheak (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              primaryKeyName: colors_pkey
+            name: color_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: color_name
+            type: VARCHAR(255)
+        tableName: colors
+- changeSet:
+    id: 1698498009104-2
+    author: Suon Vicheak (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              primaryKeyName: product_import_histories_pkey
+            name: import_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: import_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: import_price
+            type: numeric(38, 2)
+        - column:
+            constraints:
+              nullable: false
+            name: import_unit
+            type: INTEGER
+        - column:
+            name: product_id
+            type: BIGINT
+        tableName: product_import_histories
+- changeSet:
+    id: 1698498009104-3
+    author: Suon Vicheak (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              primaryKeyName: products_pkey
+            name: product_id
+            type: BIGINT
+        - column:
+            name: product_stock
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: product_name
+            type: VARCHAR(255)
+        - column:
+            name: product_sale_price
+            type: numeric(38, 2)
+        - column:
+            name: color_id
+            type: BIGINT
+        tableName: products
+- changeSet:
+    id: 1698498009104-4
+    author: Suon Vicheak (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: product_name
+        constraintName: uk_f55t6sm19p5lrihq24a6knota
+        tableName: products
+- changeSet:
+    id: 1698498009104-5
+    author: Suon Vicheak (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: color_name
+        constraintName: uk_ggsx4sf2c5i5d8becr67fps3d
+        tableName: colors
+- changeSet:
+    id: 1698498009104-6
+    author: Suon Vicheak (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: color_id
+        baseTableName: products
+        constraintName: fkebociq5k3b2tkcxh3q5dg4eed
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: color_id
+        referencedTableName: colors
+        validate: true
+- changeSet:
+    id: 1698498009104-7
+    author: Suon Vicheak (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: product_id
+        baseTableName: product_import_histories
+        constraintName: fkmpiyohgei1add3nnfobqe169b
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: product_id
+        referencedTableName: products
+        validate: true
+

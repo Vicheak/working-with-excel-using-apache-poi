@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002_init_data
+      author: vicheak@gmail.com
+      changes:
+        - loadData:
+            tableName: colors
+            columns:
+              - column:
+                  header: color_name
+                  name: color_name
+                  type: VARCHAR(255)
+            file: db/data/002_init_data_colors.csv
+        - loadData:
+            tableName: products
+            columns:
+              - column:
+                  header: product_name
+                  name: product_name
+                  type: VARCHAR(255)
+              - column:
+                  header: color_id
+                  name: color_id
+                  type:  BIGINT
+            file: db/data/002_init_data_products.csv
