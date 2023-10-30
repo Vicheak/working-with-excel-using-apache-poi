@@ -2,10 +2,13 @@ package com.vicheak.core.service.impl;
 
 import com.vicheak.core.dto.ProductDto;
 import com.vicheak.core.dto.ProductImportDto;
+import com.vicheak.core.dto.UpdateProductDto;
+import com.vicheak.core.entity.Color;
 import com.vicheak.core.entity.Product;
 import com.vicheak.core.entity.ProductImportHistory;
 import com.vicheak.core.mapper.ProductImportHistoryMapper;
 import com.vicheak.core.mapper.ProductMapper;
+import com.vicheak.core.repository.ColorRepository;
 import com.vicheak.core.repository.ProductImportHistoryRepository;
 import com.vicheak.core.repository.ProductRepository;
 import com.vicheak.core.service.ProductService;
@@ -34,6 +37,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductMapper productMapper;
     private final ProductImportHistoryRepository productImportHistoryRepository;
     private final ProductImportHistoryMapper productImportHistoryMapper;
+    private final ColorRepository colorRepository;
 
     @Transactional
     @Override
@@ -155,6 +159,36 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDto> loadProducts() {
         return productMapper.toProductDto(productRepository.findAll());
+    }
+
+    @Override
+    public void updateById(Long productId, UpdateProductDto updateProductDto) {
+        //check product if exists
+        Product product = productRepository.findById(productId)
+                .orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                String.format("Product with id = %d not found",
+                                        productId))
+                );
+
+        productMapper.fromUpdateProductDtoToProduct(product, updateProductDto);
+
+        //update the reference
+        if (updateProductDto.colorId() != null) {
+            //check color if exists
+            colorRepository.findById(updateProductDto.colorId())
+                    .orElseThrow(
+                            () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                    String.format("Color with id = %d not found",
+                                            updateProductDto.colorId()))
+                    );
+
+            Color color = new Color();
+            color.setId(updateProductDto.colorId());
+            product.setColor(color);
+        }
+
+        productRepository.save(product);
     }
 
 }

@@ -2,6 +2,7 @@ package com.vicheak.core.controller;
 
 import com.vicheak.core.dto.ProductDto;
 import com.vicheak.core.dto.ProductImportDto;
+import com.vicheak.core.dto.UpdateProductDto;
 import com.vicheak.core.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +47,13 @@ public class ProductController {
     @GetMapping
     public List<ProductDto> loadProducts() {
         return productService.loadProducts();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PatchMapping("/{productId}")
+    public void updateById(@PathVariable Long productId,
+                           @RequestBody UpdateProductDto updateProductDto){
+        productService.updateById(productId, updateProductDto);
     }
 
 }

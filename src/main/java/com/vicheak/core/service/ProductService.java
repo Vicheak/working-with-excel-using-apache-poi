@@ -2,7 +2,7 @@ package com.vicheak.core.service;
 
 import com.vicheak.core.dto.ProductDto;
 import com.vicheak.core.dto.ProductImportDto;
-import com.vicheak.core.dto.SalePriceDto;
+import com.vicheak.core.dto.UpdateProductDto;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -18,5 +18,7 @@ public interface ProductService {
     void setSalePrice(Long productId);
 
     List<ProductDto> loadProducts();
+
+    void updateById(Long productId, UpdateProductDto updateProductDto);
 
 }
